@@ -1,0 +1,83 @@
+.main-interno.page-noticias ul.noticias-lista {
+	list-style-type:none
+}
+.main-interno.page-noticias ul.noticias-lista li {
+	border-bottom: 1px dotted #999;
+	padding: 10px 0;
+}
+.main-interno.page-noticias ul.noticias-lista li:hover {
+	background: #F8F8F8;
+}
+.main-interno.page-noticias ul.noticias-lista li a {
+	font-size: 0.8em;
+	color: #333;
+}
+.main-interno.page-noticias ul.noticias-lista li a:focus,
+.main-interno.page-noticias ul.noticias-lista li a:hover {
+	text-decoration: none;
+}
+.main-interno.page-noticias ul.noticias-lista li a:hover h3 {
+	color: #156BB4;
+}
+.main-interno.page-noticias ul.noticias-lista h3 {
+	margin-top: 0px;
+}
+.main-interno.page-noticias ul.noticias-lista span {
+	font-size: .7em;
+	color: #999;
+}
+.main-interno.page-noticias ul.noticias-lista p {
+	margin-bottom: 0px;
+}
+.main-interno.page-noticias article > span {
+	display: block;
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 10px;
+	font-size: .8em;
+}
+.main-interno.page-noticias article > h3 {
+	font-size: 1.5em;
+	color: #156BB4;
+}
+.main-interno.page-noticias aside > ul.noticias-lista li {
+	padding: 10px 5px;
+}
+.main-interno.page-noticias aside > ul.noticias-lista h3 {
+	font-size: 1.1em;
+}
+.main-interno.page-noticias aside > ul.noticias-lista span {
+	font-size: .6em;
+}
+.main-interno.page-noticias ul.noticias-lista span {
+	font-size: .7em;
+	color: #999;
+}
+.main-interno.page-noticias aside > .aside-titulo {
+	background-color: #156BB4;
+	border-radius: 3px;
+	padding: 10px;
+	font-size: 1em;
+	color: #fff;
+}
+.main-interno.page-noticias aside > .aside-titulo:after {
+	border: 10px solid transparent;
+	border-top-color: #156BB4;
+	content: "";
+	top: 38px;
+	left: 30px;
+	position: absolute;
+}
+.main-interno.page-noticias aside > .aside-titulo h4 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.main-interno.page-noticias .pagination li a {
+	font-size: .9em;
+	color: #1F55A7;
+}
+.main-interno.page-noticias .col-sm-8 img {
+	max-width: 100%;
+}
+.main-content{
+    margin-top: 50px;
+}
