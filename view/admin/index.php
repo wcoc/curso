@@ -28,6 +28,8 @@
                             <h3 class="panel-title">Realizar Log-in</h3>
                         </div>
                         <div class="panel-body">
+                            <div id="retorno" hidden="true"></div>
+                            
                             <form role="form" onsubmit="return false;">
                                 <fieldset>
                                     <div class="form-group">

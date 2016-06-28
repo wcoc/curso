@@ -63,26 +63,53 @@ class Usuario{
         $this->login = $login;
     }
 
-    public function getUsuarioByLogin($login){
+    /**
+     * Metodo responsável por buscar um usuario pelo login
+     * 
+     * @param String $login login do usuário a ser buscado no banco de dados
+     * @return \Usuario
+     */
+    public static function getUsuarioByLogin($login){
         $con = Conexao::getConexao();
+        
+        // Select para buscar usuário no banco de dados pelo login,
+        // o `?` indica que será um parametro setado posteriormente pelo PHP.
         
         $selUsuario = "SELECT id, nome, login, senha, data_cadastro 
                         FROM usuario WHERE login = ? LIMIT 1";
+        
+        // coloco para preparar o select para execução no banco de dados.
         $pstmt = $con->prepare($selUsuario);
+        
+        // o primeiro parametro indica qual o tipo do parametro,
+        // e o segundo o valor que irá substituir o `?` do select.
+        // 
+        // s= String; i= inteiro; d= double/float.
         $pstmt->bind_param("s", $login);
         
+        // executa o select no banco de dados.
         $pstmt->execute();
-        if($pstmt->num_rows > 0){
-            $result = $pstmt->get_result();
+        
+        // armazena o retorno do select em uma variavel.
+        $result = $pstmt->get_result();
+        
+        // verifico se o retorno possui mais de uma linha.
+        if($result->num_rows > 0){
+            
+            // pego o retorno do select, e utilizo a função fetch_assoc() para 
+            // me retornar um array associativo, onde eu posso resgatar os valores
+            // do select atraves do nome das colunas conforme abaixo.
             $usuarioBD = $result->fetch_assoc();
             
-            $this->setId($usuarioBD['id']);
-            $this->setNome($usuarioBD['nome']);
-            $this->setLogin($usuarioBD['login']);
-            $this->setSenha($usuarioBD['senha']);
-            $this->setData_cadastro(new DateTime($usuarioBD['data_cadastro']));
+            // instancio uma nova classe Model do Usuario e preencho os respectivos valores.
+            $usuario = new Usuario();
+            $usuario->setId($usuarioBD['id']);
+            $usuario->setNome($usuarioBD['nome']);
+            $usuario->setLogin($usuarioBD['login']);
+            $usuario->setSenha($usuarioBD['senha']);
+            $usuario->setData_cadastro(new DateTime($usuarioBD['data_cadastro']));
             
-            return $this;
+            return $usuario;
         }else{
             return null;
         }
