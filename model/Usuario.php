@@ -14,6 +14,7 @@ class Usuario{
     private $email;
     private $senha;
     private $data_cadastro;
+    private $status;
     
     function getId() {
         return $this->id;
@@ -63,6 +64,15 @@ class Usuario{
         $this->login = $login;
     }
 
+    function getStatus() {
+        return $this->status;
+    }
+
+    function setStatus($status) {
+        $this->status = $status;
+    }
+
+        
     /**
      * Metodo responsável por buscar um usuario pelo login
      * 

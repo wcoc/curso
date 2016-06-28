@@ -16,6 +16,7 @@ class Noticia{
     private $data_cadastro;
     private $usuario_id;
     private $categoria_id;
+    private $status;
     
     private $usuario;
     private $categoria;
@@ -102,6 +103,12 @@ class Noticia{
         $this->categoria = $categoria;
     }
 
+    function getStatus() {
+        return $this->status;
+    }
 
+    function setStatus($status) {
+        $this->status = $status;
+    }
     
 }

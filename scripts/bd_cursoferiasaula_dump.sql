@@ -31,6 +31,7 @@ CREATE TABLE `noticia` (
   `conteudo` text NOT NULL,
   `thumbnail` varchar(250) NOT NULL,
   `data_cadastro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `USUARIO_DA_NOTICIA_FK_idx` (`usuario_id`),
   KEY `CATEGORIA_DA_NOTICIA_FK_idx` (`categoria_id`),
@@ -59,8 +60,9 @@ CREATE TABLE `noticia_categoria` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `data_cadastro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,6 +88,7 @@ CREATE TABLE `usuario` (
   `nome` varchar(200) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIKE_LOGIN_USUARIO` (`login`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -97,7 +100,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'willian','202cb962ac59075b964b07152d234b70','Willian Colognesi','williancolognesi@gmail.com','2016-06-28 02:50:54'),(2,'admin','202cb962ac59075b964b07152d234b70','Administrador',NULL,'2016-06-28 02:51:12');
+INSERT INTO `usuario` VALUES (1,'willian','202cb962ac59075b964b07152d234b70','Willian Colognesi','williancolognesi@gmail.com','2016-06-28 02:50:54',NULL),(2,'admin','202cb962ac59075b964b07152d234b70','Administrador',NULL,'2016-06-28 02:51:12',NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -110,4 +113,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-27 23:53:52
+-- Dump completed on 2016-06-28 15:08:36

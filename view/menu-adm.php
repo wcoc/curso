@@ -38,13 +38,29 @@
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Notícias</a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">
+                        <a href="view/noticia/noticia_add.php">
                             <span class="fa fa-plus"></span> Adicionar Notícia
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="view/noticia/noticia_index.php">
                             <span class="fa fa-th-list"></span> Gerenciar Notícias
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Categoria de Notícia</a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="view/noticiacategoria/noticiacategoria_add.php">
+                            <span class="fa fa-plus"></span> Adicionar Categoria
+                        </a>
+                    </li>
+                    <li>
+                        <a href="view/noticiacategoria/noticiacategoria_index.php">
+                            <span class="fa fa-th-list"></span> Gerenciar Categorias
                         </a>
                     </li>
                 </ul>
