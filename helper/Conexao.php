@@ -4,7 +4,7 @@ class Conexao{
     
     private static $IP = "localhost";
     private static $PORTA = 3306;
-    private static $BD = "cursodeferias_aula";
+    private static $BD = "cursodeferias";
     private static $USUARIO = "root";
     private static $SENHA = "willian@123";
     

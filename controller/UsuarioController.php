@@ -20,8 +20,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     exit($retorno);
                 }else{
                     $p = $_POST;
-                    $login = $p['login'];
-                    $senha = md5($p['senha']); // criptografa a senha enviada pelo formulário do usuário.
+                    $login = $p['login_usuario'];
+                    $senha = md5($p['senha_usuario']); // criptografa a senha enviada pelo formulário do usuário.
                     
                     //instancio o controller para iniciar o login do usuario.
                     $usuarioController = new UsuarioController();
