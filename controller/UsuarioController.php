@@ -14,7 +14,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         switch($_POST['usuario']){
             
             case "login":
-                @session_start();
+                if (session_status() == PHP_SESSION_NONE) { // se a sessão ainda não foi iniciada, inicio ela.
+                    session_start();
+                }
+                
                 if(isset($_SESSION['usuario'])){
                     $retorno = new Retorno(FALSE, "Usuário já está logado", 0);
                     exit($retorno);
@@ -78,7 +81,9 @@ class UsuarioController {
         if($retorno->getErro()){
             return $retorno;
         }else{
-            @session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
             $usuario = Usuario::getUsuarioByLogin($login); // busco o objeto do usuário no banco de dados.
             
             /* Crio a sessão com dados du usário logado. */
