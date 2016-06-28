@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Curso de Ferias PHP Avançado com Ajax">
         <meta name="author" content="Willian Colognesi">
-        <base href="http://localhost/cursodeferias_aula/" target="_blank">
+        <base href="http://localhost/cursodeferias_aula/" >
 
         <title>Portal de Notícias Unifil - Curso de Férias</title>
 
@@ -17,5 +17,5 @@
         <link href="view/css/sb-admin-2.css" rel="stylesheet">
         <link href="view/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
-    
+
     <body>

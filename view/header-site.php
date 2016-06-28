@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Curso de Ferias PHP Avançado com Ajax">
         <meta name="author" content="Willian Colognesi">
-        <base href="http://localhost/cursodeferias_aula/" target="_blank">
+        <base href="http://localhost/cursodeferias_aula/" >
 
         <title>Bem vindo ao portal de Notícias!</title>
 
@@ -16,5 +16,5 @@
         <link href="view/css/shop-item.css" rel="stylesheet">
         <link href="view/css/style.css" rel="stylesheet">
     </head>
-    
+
     <body>
