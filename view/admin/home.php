@@ -21,7 +21,9 @@
                 <?php
                 $ctrl = new TesteController();
 
-                $ctrl->teste();
+//                $ctrl->testaSave();
+//                $ctrl->teste();
+                
                 ?>
             </div>
             <!-- /.container-fluid -->

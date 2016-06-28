@@ -7,6 +7,7 @@
 //require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/cursodeferias_aula/config.php";
 
+require_once(BASEPATH . "/helper/Conexao.php");
 function autoloadModel($className) {
     $filename = BASEPATH . "/model/" . $className . ".php";
     if (is_readable($filename)) {

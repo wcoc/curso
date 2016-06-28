@@ -1,5 +1,5 @@
 <?php
-
+require_once BASEPATH . '/helper/Conexao.php';
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -30,6 +30,24 @@ class Teste{
         $this->nome = $nome;
     }
 
-
+    function validate(){
+        if($this->id == null){
+            throw new Exception("ID não pode ser null!");
+        }
+    }
+    
+    function save(){
+        $con = Conexao::getConnection();
+        
+        $sel = "select * from teste";
+        $pstmt = $con->prepare($sel);
+        $pstmt->execute();
+        
+        $result = $pstmt->get_result();
+        
+        $testeBD = $result->fetch_assoc();
+        
+        echo $testeBD['nome'];
+    }
     
 }
