@@ -26,7 +26,7 @@ if(isset($_GET['noticia_id'])){
             
             <div id="div-retorno"></div>
             
-            <form class="form-horizontal" id="form-noticiaadd">
+            <form class="form-horizontal" method="POST" id="form-noticiaadd">
                 
                 <div class="form-group">
                     <label for="inputTitulo" class="control-label col-xs-3">Título</label>
@@ -71,7 +71,7 @@ if(isset($_GET['noticia_id'])){
                 <div class="form-group">
                     <label for="inputStatus" class="control-label col-xs-3">Status</label>
                     <div class="col-xs-6">
-                        <select class="form-control" id="inputStatus">
+                        <select class="form-control" name="inputStatus" id="inputStatus">
                             <option value="1" <?= $noticia->getStatus() == 1 ? "selected" : ""; ?> >Ativo</option>
                             <option value="0" <?= $noticia->getStatus() == 0 ? "selected" : ""; ?> >Inativo</option>
                         </select>

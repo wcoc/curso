@@ -1,5 +1,6 @@
 <?php
 require_once("Autoload.php");
+require_once(BASEPATH . "/util/FileUtil.php");
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
@@ -8,6 +9,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         switch($_POST['noticia']){
             
             case "inserir":
+                
                 $p = $_POST;
                 $f = $_FILES;
                 
@@ -28,7 +30,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                         $noticia->setThumbnail($retUpload->getMensagem());
                         $noticia->setUsuario_id($_SESSION['usuario_id']);
                         
-                        $ctrl->insere($noticia);
+                        $retInsere = $ctrl->insere($noticia);
+                        exit($retInsere);
                     }else{
                         exit($retUpload);
                     }

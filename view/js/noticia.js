@@ -1,13 +1,7 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 
 $("#form-noticiaadd").submit(function(){
     tinyMCE.triggerSave();
-    var form = new FormData($(this));
+    var form = new FormData($(this)[0]);
     var tipo_requisicao = "inserir";
     var noticia_id = getParametro("noticia_id");
     
@@ -25,7 +19,7 @@ $("#form-noticiaadd").submit(function(){
             contentType: false,
             processData: false,
             data: form,
-            succes: function(response){
+            success: function(response){
                 console.log(response);
                 var result = $.parseJSON(response);
 
