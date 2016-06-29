@@ -172,6 +172,10 @@ class NoticiaCategoria{
             //$result = $pstmt->get_result();
             $pstmt->store_result();
             if($pstmt->num_rows > 0){
+                $descricao = null;
+                $data_cadastro = null;
+                $status = null;
+                
                 $pstmt->bind_result($id, $descricao, $data_cadastro, $status);
                 $pstmt->fetch();
                 //$categoriaBD = $result->fetch_assoc();

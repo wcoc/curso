@@ -22,7 +22,16 @@ $("#form-noticiaadd").submit(function(){
             success: function(response){
                 console.log(response);
                 var result = $.parseJSON(response);
-
+                var div = $("#div-retorno");
+                
+                if(result.erro){
+                    div.attr("class", "alert alert-danger");
+                    
+                }else{
+                    div.attr("class", "alert alert-success");
+                }
+                
+                div.html(result.mensagem);
             },
             error: function(err){
                 console.log(err);

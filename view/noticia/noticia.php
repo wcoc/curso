@@ -6,10 +6,10 @@ require_once(BASEPATH . "/model/Noticia.php");
 $noticia = new Noticia();
 $categorias = NoticiaCategoria::getCategoriasAtivas();
 if(isset($_GET['noticia_id'])){
-//    $categoria = NoticiaCategoria::getNoticiaCategoria($_GET['noticiacategoria_id']);
-//    if($categoria == null){
-//        header("Location: noticiacategoria_index.php");
-//    }
+    $noticia = Noticia::getNoticia($_GET['noticia_id']);
+    if($noticia == null){
+        header("Location: noticia_index.php");
+    }
 }
 ?>
 
@@ -57,7 +57,7 @@ if(isset($_GET['noticia_id'])){
                 <div class="form-group">
                     <label for="inputConteudo" class="control-label col-xs-3">Conteúdo</label>
                     <div class="col-xs-6">
-                        <textarea type="text" class="form-control" name="inputConteudo" id="inputConteudo" ></textarea> 
+                        <textarea type="text" class="form-control" name="inputConteudo" id="inputConteudo" ><?= $noticia->getConteudo(); ?></textarea> 
                     </div>
                 </div>
                 

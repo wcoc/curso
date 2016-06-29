@@ -8,7 +8,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/cursodeferias_aula/config.php";
 
 require_once(BASEPATH . "/helper/Conexao.php");
-date_default_timezone_set("America/Sao_Paulo");
+
 
 function autoloadModel($className) {
     $filename = BASEPATH . "/model/" . $className . ".php";

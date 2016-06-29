@@ -12,7 +12,7 @@ if(isset($_GET['categoria'])){
 }
 $categorias = NoticiaCategoria::getCategoriasAtivas(); 
 
-$noticias = Noticia::getNoticiasCategoria($categoriaAtual, true);
+$noticia = Noticia::getNoticia($_GET['id']);
 ?>
 <?php require("../menu-site.php"); ?>
 
@@ -36,31 +36,11 @@ $noticias = Noticia::getNoticiasCategoria($categoriaAtual, true);
             <div class="col-md-9">
                 
                 <div class="main-content">
+                    <h2><?= $noticia->getTitulo(); ?></h2>
                     <div class="main-interno page-noticias">
-                        <ul class="noticias-lista">
-                            <?php if($noticias != null){ ?>
-                                <?php foreach($noticias as $noticia){ ?>
-                                    <li class="row">
-                                        <div class="col-xs-3">
-                                            <?php
-                                            $thumb = substr($noticia->getThumbnail(), 1);
-                                            ?>
-                                            <img src="<?= $thumb; ?>" />
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <span>Por <?= $noticia->getUsuario()->getNome(); ?> - <?= $noticia->getData_cadastro()->format("d/m/Y H:i:s"); ?></span>
-                                            <a href="view/home/noticia_view.php?id=<?= $noticia->getId(); ?>"><h3> <?= $noticia->getTitulo(); ?></h3></a>
-
-                                            <p class="hidden-xs"><?= $noticia->getIntroducao(); ?></p>
-                                        </div>
-                                    </li>
-                                <?php } ?>
-                            <?php } ?>
-                        </ul>
+                        <p><?= $noticia->getConteudo(); ?></p>
                     </div>
                 </div>
-
-                <?php NoticiaController::paginacao_site($categoriaAtual); ?>
             </div>
         </div>
 

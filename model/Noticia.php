@@ -8,6 +8,8 @@
 
 class Noticia{
     
+    const TOTAL_REG_PAGINA = 2;
+    
     private $id;
     private $titulo;
     private $conteudo;
@@ -203,18 +205,17 @@ class Noticia{
             $pstmt->bind_param("i", $id);
             $pstmt->execute();
             
-            
             $pstmt->store_result();
             //$result = $pstmt->get_result();
             if($pstmt->num_rows > 0){
                 //$noticiaBD = $result->fetch_assoc();
-                $pstmt->bind_result($id, $titulo, $introducao, $conteudo,
+                $pstmt->bind_result($id_not, $titulo, $introducao, $conteudo,
                                     $thumbnail, $status, $usuario_id, $categoria_id,
                                     $data_cadastro);
                 $pstmt->fetch();
                 
                 $noticia = new Noticia();
-                $noticia->setId($id);
+                $noticia->setId($id_not);
                 $noticia->setTitulo($titulo);
                 $noticia->setIntroducao($introducao);
                 $noticia->setConteudo($conteudo);
@@ -235,7 +236,195 @@ class Noticia{
                 $con->close();
             }
         }
+    }
+    
+    public static function getNoticiasCategoria($categoria_id = null, $paginacao = false){
+        $con = Conexao::getConexao();
         
+        try{
+            $selNoticias = "SELECT id, titulo, introducao, conteudo, thumbnail,
+                            status, data_cadastro, usuario_id, categoria_id 
+                            FROM noticia WHERE status = 1 ";
+            if($categoria_id != null){
+                $selNoticias .= " AND categoria_id = ? ";
+            }
+            
+            if($paginacao){
+                $de = 0;
+                $ate = Noticia::TOTAL_REG_PAGINA;
+                
+                if(isset($_GET['pagina'])){
+                    $de = $_GET['pagina']-1;
+                }
+                $de *= Noticia::TOTAL_REG_PAGINA;
+                
+                $selNoticias .= " LIMIT ".$de.", ".$ate;
+            }
+            
+            $pstmt = $con->prepare($selNoticias);
+            
+            if($categoria_id != null){
+                $pstmt->bind_param("i", $categoria_id);
+            }
+            $pstmt->execute();
+            $pstmt->store_result();
+            
+            if($pstmt->num_rows > 0){
+                $noticias = [];
+                $pstmt->bind_result($id, $titulonoticia, $introducao, $conteudo,
+                                    $thumbnail, $status, $data_cadastro, $usuario_id,
+                                    $categoria_id);
+                
+                while($pstmt->fetch()){
+                    $noticia = new Noticia();
+                    $noticia->setId($id);
+                    $noticia->setCategoria_id($categoria_id);
+                    $noticia->setTitulo($titulonoticia);
+                    $noticia->setConteudo($conteudo);
+                    $noticia->setData_cadastro(new DateTime($data_cadastro));
+                    $noticia->setThumbnail($thumbnail);
+                    $noticia->setIntroducao($introducao);
+                    $noticia->setUsuario_id($usuario_id);
+                    $noticia->setStatus($status);
+                    
+                    array_push($noticias, $noticia);
+                }
+                return $noticias;
+            }else{
+                return null;
+            }
+        } catch (Exception $ex) {
+            return null;
+        }finally{
+            if($con != null){
+                $con->close();
+            }
+        }
+    }
+    
+    public static function getNoticias($titulo = null, $paginacao = false){
+        $con = Conexao::getConexao();
         
+        try{
+            $selNoticias = "SELECT id, titulo, introducao, conteudo, thumbnail,
+                            status, data_cadastro, usuario_id, categoria_id 
+                            FROM noticia WHERE 1=1 ";
+            if($titulo != null){
+                $selNoticias .= " AND LOWER(titulo) LIKE ? ";
+            }
+            
+            if($paginacao){
+                $de = 0;
+                $ate = Noticia::TOTAL_REG_PAGINA;
+                
+                if(isset($_GET['pagina'])){
+                    $de = $_GET['pagina']-1;
+                }
+                $de *= Noticia::TOTAL_REG_PAGINA;
+                
+                $selNoticias .= " LIMIT ".$de.", ".$ate;
+            }
+            
+            $pstmt = $con->prepare($selNoticias);
+            
+            if($titulo != null){
+                $tit = "%".strtolower($titulo)."%";
+                $pstmt->bind_param("s", $tit);
+            }
+            $pstmt->execute();
+            $pstmt->store_result();
+            
+            if($pstmt->num_rows > 0){
+                $noticias = [];
+                $pstmt->bind_result($id, $titulonoticia, $introducao, $conteudo,
+                                    $thumbnail, $status, $data_cadastro, $usuario_id,
+                                    $categoria_id);
+                
+                while($pstmt->fetch()){
+                    $noticia = new Noticia();
+                    $noticia->setId($id);
+                    $noticia->setCategoria_id($categoria_id);
+                    $noticia->setTitulo($titulonoticia);
+                    $noticia->setConteudo($conteudo);
+                    $noticia->setData_cadastro(new DateTime($data_cadastro));
+                    $noticia->setThumbnail($thumbnail);
+                    $noticia->setIntroducao($introducao);
+                    $noticia->setUsuario_id($usuario_id);
+                    $noticia->setStatus($status);
+                    
+                    array_push($noticias, $noticia);
+                }
+                return $noticias;
+            }else{
+                return null;
+            }
+        } catch (Exception $ex) {
+            return null;
+        }finally{
+            if($con != null){
+                $con->close();
+            }
+        }
+    }
+    
+    public static function getCountTitulo($titulo = null){
+        $con = Conexao::getConexao();
+        
+        try{
+            $sel = "SELECT count(*) as registros 
+                        FROM noticia WHERE 1=1 ";
+            if($titulo != null){
+                $sel .= " AND LOWER(titulo) LIKE ? ";
+            }
+            $pstmt = $con->prepare($sel);
+            
+            if($titulo != null){
+                $tit = "%".  strtolower($titulo) ."%";
+                $pstmt->bind_param("s", $tit);
+            }
+            $pstmt->execute();
+            $pstmt->store_result();
+            $pstmt->bind_result($registros);
+            
+            $pstmt->fetch();
+            
+            return $registros;
+        } catch (Exception $ex) {
+            return null;
+        }finally{
+            if($con != null){
+                $con->close();
+            }
+        }
+    }
+    
+    public static function getCountCategoria($categoria_id = null){
+        $con = Conexao::getConexao();
+        
+        try{
+            $sel = "SELECT count(*) as registros 
+                        FROM noticia WHERE status = 1 ";
+            if($categoria_id != null){
+                $sel .= " AND categoria_id = ? ";
+            }
+            $pstmt = $con->prepare($sel);
+            
+            if($categoria_id != null){
+                $pstmt->bind_param("i", $categoria_id);
+            }
+            $pstmt->execute();
+            $pstmt->store_result();
+            $pstmt->bind_result($registros);
+            
+            $pstmt->fetch();
+            
+            return $registros;
+        } catch (Exception $ex) {
+            return null;
+        }finally{
+            if($con != null){
+                $con->close();
+            }
+        }
     }
 }
