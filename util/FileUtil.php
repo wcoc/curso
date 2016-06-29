@@ -58,7 +58,6 @@ class FileUtil{
                     $retorno->setErro(false);
                     $retorno->setCodigo(0);
                     $retorno->setMensagem($caminho.$nomeArquivo);
-                    
                 }
             }else{
                 $retorno->setErro(true);

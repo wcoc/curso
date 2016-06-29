@@ -35,6 +35,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 
                 break;
             
+            case "logoff":
+                $usuarioController = new UsuarioController();
+                exit($usuarioController->logoff());
+                
             case "insere":
                 
                 break;
@@ -87,11 +91,26 @@ class UsuarioController {
             $usuario = Usuario::getUsuarioByLogin($login); // busco o objeto do usuário no banco de dados.
             
             /* Crio a sessão com dados du usário logado. */
+            $_SESSION['usuario_id'] = $usuario->getId();
             $_SESSION['login'] = $usuario->getLogin();
             $_SESSION['nome'] = $usuario->getNome();
             $_SESSION['senha'] = $usuario->getSenha();
             
             return $retorno;
+        }
+    }
+    
+    public function logoff(){
+        try{
+            if(session_status() == PHP_SESSION_NONE){
+                session_start();
+            }
+            session_unset();
+            session_destroy();
+            
+            return new Retorno(false, "Logoff efetuado com sucesso!", 0);
+        } catch (Exception $ex) {
+            return new Retorno(true, "Não foi possível efetuar o logoff!", 1);
         }
     }
     

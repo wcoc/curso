@@ -125,4 +125,50 @@ class Usuario{
         }
     }
     
+    public static function getUsuario($id){
+        $con = Conexao::getConexao();
+        
+        // Select para buscar usuário no banco de dados pelo login,
+        // o `?` indica que será um parametro setado posteriormente pelo PHP.
+        
+        $selUsuario = "SELECT id, nome, login, senha, data_cadastro 
+                        FROM usuario WHERE id = ? LIMIT 1";
+        
+        // coloco para preparar o select para execução no banco de dados.
+        $pstmt = $con->prepare($selUsuario);
+        
+        // o primeiro parametro indica qual o tipo do parametro,
+        // e o segundo o valor que irá substituir o `?` do select.
+        // 
+        // s= String; i= inteiro; d= double/float.
+        $pstmt->bind_param("i", $id);
+        
+        // executa o select no banco de dados.
+        $pstmt->execute();
+        
+        // armazena o retorno do select em uma variavel.
+        $result = $pstmt->get_result();
+        
+        // verifico se o retorno possui mais de uma linha.
+        if($result->num_rows > 0){
+            
+            // pego o retorno do select, e utilizo a função fetch_assoc() para 
+            // me retornar um array associativo, onde eu posso resgatar os valores
+            // do select atraves do nome das colunas conforme abaixo.
+            $usuarioBD = $result->fetch_assoc();
+            
+            // instancio uma nova classe Model do Usuario e preencho os respectivos valores.
+            $usuario = new Usuario();
+            $usuario->setId($usuarioBD['id']);
+            $usuario->setNome($usuarioBD['nome']);
+            $usuario->setLogin($usuarioBD['login']);
+            $usuario->setSenha($usuarioBD['senha']);
+            $usuario->setData_cadastro(new DateTime($usuarioBD['data_cadastro']));
+            
+            return $usuario;
+        }else{
+            return null;
+        }
+    }
+    
 }

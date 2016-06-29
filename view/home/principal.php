@@ -1,5 +1,16 @@
 <?php require("../header-site.php"); ?>
+<?php require_once(BASEPATH . "/model/NoticiaCategoria.php"); ?>
 
+
+<?php 
+$categoriaAtual = null;
+
+if(isset($_GET['categoria'])){
+    $categoriaAtual = $_GET['categoria'];
+}
+$categorias = NoticiaCategoria::getCategoriasAtivas(); 
+
+?>
 <?php require("../menu-site.php"); ?>
 
 <!-- Page Content -->
@@ -10,9 +21,12 @@
             <div class="col-md-3">
                 <p class="lead">Categorias</p>
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
+                    <a href="view/home/principal.php" class="list-group-item <?= $categoriaAtual == null ? "active" : ""; ?>">Geral</a>
+                    <?php if($categorias != null){
+                        foreach($categorias as $categoria){ ?>
+                            <a href="view/home/principal.php?categoria=<?= $categoria->getId(); ?>" class="list-group-item <?= $categoria->getId() == $categoriaAtual ? "active" : ""; ?>"><?= $categoria->getDescricao(); ?></a>
+                        <?php } ?>
+                    <?php } ?>
                 </div>
             </div>
             

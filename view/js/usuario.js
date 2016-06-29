@@ -62,3 +62,19 @@ function login(){
         }
     });
 }
+
+function logoff(){
+    
+    $.post("controller/UsuarioController.php",{
+        usuario: "logoff"
+    }, function(data){
+        console.log(data);
+        var result = $.parseJSON(data);
+        
+        if(result.erro){
+            alert(result.mensagem);
+        }else{
+            location.href = "view/admin";
+        }
+    });
+}

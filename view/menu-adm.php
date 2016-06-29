@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Unifil</a>
+            <a class="navbar-brand" href="#">Bem vindo <strong><?= $_SESSION['nome']; ?></strong></a>
         </div>
         <!-- /.navbar-header -->
 
@@ -19,7 +19,7 @@
                 <ul class="dropdown-menu dropdown-user">
                     <li class="divider"></li>
                     <li>
-                        <a href="javascript:void(0);" onclick="teste();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <a href="javascript:void(0);" onclick="return logoff();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -38,7 +38,7 @@
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Notícias</a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="view/noticia/noticia_add.php">
+                        <a href="view/noticia/noticia.php">
                             <span class="fa fa-plus"></span> Adicionar Notícia
                         </a>
                     </li>
@@ -54,7 +54,7 @@
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Categoria de Notícia</a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="view/noticiacategoria/noticiacategoria_add.php">
+                        <a href="view/noticiacategoria/noticiacategoria.php">
                             <span class="fa fa-plus"></span> Adicionar Categoria
                         </a>
                     </li>

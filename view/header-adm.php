@@ -3,6 +3,12 @@
     <head>
     <?php include_once ($_SERVER['DOCUMENT_ROOT'].'/cursodeferias_aula/config.php'); ?>
     <?php // include_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');  ?>
+        <?php 
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        ?>
+        <?php include_once(BASEPATH ."/view/security.php"); ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
