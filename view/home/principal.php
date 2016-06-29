@@ -4,13 +4,13 @@
 <?php require_once(BASEPATH . "/controller/NoticiaController.php"); ?>
 
 
-<?php 
+<?php
 $categoriaAtual = null;
 
 if(isset($_GET['categoria'])){
     $categoriaAtual = $_GET['categoria'];
 }
-$categorias = NoticiaCategoria::getCategoriasAtivas(); 
+$categorias = NoticiaCategoria::getCategoriasAtivas();
 
 $noticias = Noticia::getNoticiasCategoria($categoriaAtual, true);
 ?>
@@ -32,9 +32,9 @@ $noticias = Noticia::getNoticiasCategoria($categoriaAtual, true);
                     <?php } ?>
                 </div>
             </div>
-            
+
             <div class="col-md-9">
-                
+
                 <div class="main-content">
                     <div class="main-interno page-noticias">
                         <ul class="noticias-lista">
@@ -45,7 +45,7 @@ $noticias = Noticia::getNoticiasCategoria($categoriaAtual, true);
                                             <?php
                                             $thumb = substr($noticia->getThumbnail(), 1);
                                             ?>
-                                            <img src="<?= $thumb; ?>" />
+                                            <img style='width:100%;' src="<?= $thumb; ?>" />
                                         </div>
                                         <div class="col-xs-6">
                                             <span>Por <?= $noticia->getUsuario()->getNome(); ?> - <?= $noticia->getData_cadastro()->format("d/m/Y H:i:s"); ?></span>
