@@ -120,7 +120,7 @@ class UsuarioController {
         try{
             // Select para buscar usuário no banco de dados pelo login,
             // o `?` indica que será um parametro setado posteriormente pelo PHP.
-            $selLogin = "SELECT id, login, senha FROM usuario WHERE login = ? 
+            $selLogin = "SELECT senha FROM usuario WHERE login = ? 
                             LIMIT 1";
             
             // coloco para preparar o select para execução no banco de dados.
@@ -135,18 +135,26 @@ class UsuarioController {
             // executa o select no banco de dados.
             $pstmt->execute();
             
-            // armazena o retorno do select em uma variavel.
-            $result = $pstmt->get_result();
+            // armazena o retorno do select em memória.
+            //$result = $pstmt->get_result();
+            $pstmt->store_result();
             
             // verifico se o retorno possui mais de uma linha.
-            if($result->num_rows > 0){
-                // pego o retorno do select, e utilizo a função fetch_assoc() para 
-                // me retornar um array associativo, onde eu posso resgatar os valores
-                // do select atraves do nome das colunas conforme abaixo.
-                $usuarioBD = $result->fetch_assoc();
+            if($pstmt->num_rows > 0){
+                // pego o retorno do select, e utilizo a função bind_result([]).
+                // para ir atualizando o valor da consulta nas variaveis que 
+                // passar o nome(referência). elas não precisam necessariamente
+                // ser criadas antes de chamar o bind_result.
+                // 
+                // OBS: as variaveis devem ser passadas de acordo com a sequencia
+                // da consulta!
+                //$usuarioBD = $result->fetch_assoc();
+                $pstmt->bind_result($senhaBD);
                 
+                // chamo o metodo fetch() para popular as variaveis passadas.
+                $pstmt->fetch();
                 // armazeno a senha do usuário que veio do banco de dados em uma váriavel
-                $senhaBD = $usuarioBD['senha']; 
+                //$senhaBD = $usuarioBD['senha']; 
                 
                 // valido se a senha do usuário no banco de dados
                 // é igual a senha digitada no campo de senha na camada View.

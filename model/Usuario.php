@@ -101,23 +101,26 @@ class Usuario{
         $pstmt->execute();
         
         // armazena o retorno do select em uma variavel.
-        $result = $pstmt->get_result();
+        //$result = $pstmt->get_result();
         
+        $pstmt->store_result();
         // verifico se o retorno possui mais de uma linha.
-        if($result->num_rows > 0){
+        if($pstmt->num_rows > 0){
             
             // pego o retorno do select, e utilizo a função fetch_assoc() para 
             // me retornar um array associativo, onde eu posso resgatar os valores
             // do select atraves do nome das colunas conforme abaixo.
-            $usuarioBD = $result->fetch_assoc();
+            //$usuarioBD = $result->fetch_assoc();
+            $pstmt->bind_result($id, $nome, $loginbd, $senha, $data_cadastro);
+            $pstmt->fetch();
             
             // instancio uma nova classe Model do Usuario e preencho os respectivos valores.
             $usuario = new Usuario();
-            $usuario->setId($usuarioBD['id']);
-            $usuario->setNome($usuarioBD['nome']);
-            $usuario->setLogin($usuarioBD['login']);
-            $usuario->setSenha($usuarioBD['senha']);
-            $usuario->setData_cadastro(new DateTime($usuarioBD['data_cadastro']));
+            $usuario->setId($id);
+            $usuario->setNome($nome);
+            $usuario->setLogin($loginbd);
+            $usuario->setSenha($senha);
+            $usuario->setData_cadastro(new DateTime($data_cadastro));
             
             return $usuario;
         }else{
@@ -146,24 +149,32 @@ class Usuario{
         // executa o select no banco de dados.
         $pstmt->execute();
         
-        // armazena o retorno do select em uma variavel.
-        $result = $pstmt->get_result();
-        
+        // armazena o retorno do select em memória.
+        //$result = $pstmt->get_result();
+        $pstmt->store_result();
         // verifico se o retorno possui mais de uma linha.
-        if($result->num_rows > 0){
+        if($pstmt->num_rows > 0){
             
-            // pego o retorno do select, e utilizo a função fetch_assoc() para 
-            // me retornar um array associativo, onde eu posso resgatar os valores
-            // do select atraves do nome das colunas conforme abaixo.
-            $usuarioBD = $result->fetch_assoc();
+            // pego o retorno do select, e utilizo a função bind_result([]).
+            // para ir atualizando o valor da consulta nas variaveis que 
+            // passar o nome(referência). elas não precisam necessariamente
+            // ser criadas antes de chamar o bind_result.
+            // 
+            // OBS: as variaveis devem ser passadas de acordo com a sequencia
+            // da consulta!
+            //$usuarioBD = $result->fetch_assoc();
+            $pstmt->bind_result($id, $nome, $loginbd, $senha, $data_cadastro);
+            
+            // chamo o metodo fetch() para popular as variaveis passadas.
+            $pstmt->fetch();
             
             // instancio uma nova classe Model do Usuario e preencho os respectivos valores.
             $usuario = new Usuario();
-            $usuario->setId($usuarioBD['id']);
-            $usuario->setNome($usuarioBD['nome']);
-            $usuario->setLogin($usuarioBD['login']);
-            $usuario->setSenha($usuarioBD['senha']);
-            $usuario->setData_cadastro(new DateTime($usuarioBD['data_cadastro']));
+            $usuario->setId($id);
+            $usuario->setNome($nome);
+            $usuario->setLogin($loginbd);
+            $usuario->setSenha($senha);
+            $usuario->setData_cadastro(new DateTime($data_cadastro));
             
             return $usuario;
         }else{

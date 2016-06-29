@@ -144,7 +144,7 @@ class Noticia{
                     SET titulo = ?, introducao = ?, conteudo = ?, thumbnail = ?,
                     status = ?, usuario_id = ?, categoria_id = ?, data_cadastro = NOW()";
             $pstmt = $con->prepare($insert);
-
+            
             $pstmt->bind_param("ssssiii", $this->titulo, $this->introducao, 
                     $this->conteudo, $this->thumbnail, $this->status, $this->usuario_id,
                     $this->categoria_id);
@@ -202,21 +202,27 @@ class Noticia{
 
             $pstmt->bind_param("i", $id);
             $pstmt->execute();
-
-            $result = $pstmt->get_result();
-            if($result->num_rows > 0){
-                $noticiaBD = $result->fetch_assoc();
+            
+            
+            $pstmt->store_result();
+            //$result = $pstmt->get_result();
+            if($pstmt->num_rows > 0){
+                //$noticiaBD = $result->fetch_assoc();
+                $pstmt->bind_result($id, $titulo, $introducao, $conteudo,
+                                    $thumbnail, $status, $usuario_id, $categoria_id,
+                                    $data_cadastro);
+                $pstmt->fetch();
                 
                 $noticia = new Noticia();
-                $noticia->setId($noticiaBD['id']);
-                $noticia->setTitulo($noticiaBD['titulo']);
-                $noticia->setIntroducao($noticiaBD['introducao']);
-                $noticia->setConteudo($noticiaBD['conteudo']);
-                $noticia->setData_cadastro($noticiaBD['data_cadastro']);
-                $noticia->setThumbnail($noticiaBD['thumbnail']);
-                $noticia->setStatus($noticiaBD['status']);
-                $noticia->setUsuario_id($noticiaBD['usuario_id']);
-                $noticia->setCategoria_id($noticiaBD['categoria_id']);
+                $noticia->setId($id);
+                $noticia->setTitulo($titulo);
+                $noticia->setIntroducao($introducao);
+                $noticia->setConteudo($conteudo);
+                $noticia->setData_cadastro($data_cadastro);
+                $noticia->setThumbnail($thumbnail);
+                $noticia->setStatus($status);
+                $noticia->setUsuario_id($usuario_id);
+                $noticia->setCategoria_id($categoria_id);
                 
                 return $noticia;
             }else{

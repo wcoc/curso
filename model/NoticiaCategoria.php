@@ -81,17 +81,18 @@ class NoticiaCategoria{
                 $pstmt->bind_param("s", $desc);
             }
             $pstmt->execute();
-            $result = $pstmt->get_result();
+            //$result = $pstmt->get_result();
+            $pstmt->store_result();
             
-            
-            if($result->num_rows > 0){
+            if($pstmt->num_rows > 0){
+                $pstmt->bind_result($id, $descricao, $data_cadastro, $status);
                 $categorias = [];
-                while($categoraBD = $result->fetch_assoc()){
+                while($pstmt->fetch()){
                     $categoria = new NoticiaCategoria();
-                    $categoria->setId($categoraBD['id']);
-                    $categoria->setDescricao($categoraBD['descricao']);
-                    $categoria->setStatus($categoraBD['status']);
-                    $categoria->setData_cadastro(new DateTime($categoraBD['data_cadastro']));
+                    $categoria->setId($id);
+                    $categoria->setDescricao($descricao);
+                    $categoria->setStatus($status);
+                    $categoria->setData_cadastro(new DateTime($data_cadastro));
                     
                     array_push($categorias, $categoria);
                 }
@@ -168,15 +169,18 @@ class NoticiaCategoria{
             $pstmt->bind_param("i", $id);
             $pstmt->execute();
             
-            $result = $pstmt->get_result();
-            if($result->num_rows > 0){
-                $categoriaBD = $result->fetch_assoc();
+            //$result = $pstmt->get_result();
+            $pstmt->store_result();
+            if($pstmt->num_rows > 0){
+                $pstmt->bind_result($id, $descricao, $data_cadastro, $status);
+                $pstmt->fetch();
+                //$categoriaBD = $result->fetch_assoc();
                 
                 $categoria = new NoticiaCategoria();
-                $categoria->setId($categoriaBD['id']);
-                $categoria->setDescricao($categoriaBD['descricao']);
-                $categoria->setData_cadastro(new DateTime($categoriaBD['data_cadastro']));
-                $categoria->setStatus($categoriaBD['status']);
+                $categoria->setId($id);
+                $categoria->setDescricao($descricao);
+                $categoria->setData_cadastro(new DateTime($data_cadastro));
+                $categoria->setStatus($status);
                 
                 return $categoria;
             }
@@ -207,10 +211,13 @@ class NoticiaCategoria{
             }
             $pstmt->execute();
             
-            $result = $pstmt->get_result();
-            $catBD = $result->fetch_assoc();
+            //$result = $pstmt->get_result();
+            $pstmt->store_result();
+            //$catBD = $result->fetch_assoc();
+            $pstmt->bind_result($registros);
+            $pstmt->fetch();
             
-            return $catBD['registros'];
+            return $registros;
         } catch (Exception $ex) {
             return null;
         }finally{
@@ -229,15 +236,23 @@ class NoticiaCategoria{
             $pstmt = $con->prepare($sel);
             $pstmt->execute();
             
-            $result = $pstmt->get_result();
-            if($result->num_rows > 0){
+            //$result = $pstmt->get_result();
+            $pstmt->store_result();
+            if($pstmt->num_rows > 0){
                 $categorias = [];
-                while($catBD = $result->fetch_assoc()){
+                
+                $pstmt->bind_result($id, $descricao, $data_cadastro, $status);
+                
+                // o metodo fetch atualizará as variáveis passadas pelo bind_result
+                // para cara registro da consulta, e retornará TRUE se houver
+                // mais registros, 
+                // e FALSE quando não houver mais registros na consulta.
+                while($pstmt->fetch()){
                     $categoria = new NoticiaCategoria();
-                    $categoria->setId($catBD['id']);
-                    $categoria->setDescricao($catBD['descricao']);
-                    $categoria->setData_cadastro($catBD['data_cadastro']);
-                    $categoria->setStatus($catBD['status']);
+                    $categoria->setId($id);
+                    $categoria->setDescricao($descricao);
+                    $categoria->setData_cadastro($data_cadastro);
+                    $categoria->setStatus($status);
                     
                     array_push($categorias, $categoria);
                 }
